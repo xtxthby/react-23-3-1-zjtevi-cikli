@@ -15,6 +15,7 @@ const TodoList = ({ todos, onDeleteTodo, onToggleCompleted }) => (
         <Todo
           text={text}
           completed={completed}
+          // послідовність передачи функцій
           onToggleCompleted={() => onToggleCompleted(id)}
           onDelete={() => onDeleteTodo(id)}
         />

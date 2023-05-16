@@ -6,6 +6,7 @@ import TodoEditor from './components/TodoEditor';
 import Filter from './components/TodoFilter';
 import Modal from './components/Modal';
 import IconButton from './components/IconButton';
+// імпортую іконку з додаванням як ReactComponent з будь яким імям AddIcon
 import { ReactComponent as AddIcon } from './icons/add.svg';
 // import Tabs from './components/Tabs';
 // import tabs from './tabs.json';
@@ -16,28 +17,40 @@ class App extends Component {
   state = {
     todos: [],
     filter: '',
+    // початкове значення модального вікна
     showModal: false,
   };
-
+  // метод монтування розмітки перший раз
   componentDidMount() {
-    // console.log('App componentDidMount');
-
+    console.log('App componentDidMount');
+      // в localStorage зберігається перша загрузка як строка
     const todos = localStorage.getItem('todos');
+    // тут з неї робимо масив
     const parsedTodos = JSON.parse(todos);
-
+    //  перевірка якщо є тудушки
     if (parsedTodos) {
+      // записуємо в пустий масив поверх з localStorage збережені тудушки
+      // при перезагрузці вони будуть збережені
       this.setState({ todos: parsedTodos });
     }
   }
-
+  //  метод порівняння і виконання дії на ньому
+  // попередній prevProps, prevState до моменту оновлення
   componentDidUpdate(prevProps, prevState) {
-    // console.log('App componentDidUpdate');
+    console.log('App componentDidUpdate');
+    // до оновлення
+    console.log(prevState);
+    // після оновлення
+    console.log(this.state);
 
+    // наступний масив
     const nextTodos = this.state.todos;
+    // попередній масив
     const prevTodos = prevState.todos;
-
+    // порівняння та запис в локал сторадж
     if (nextTodos !== prevTodos) {
       console.log('Обновилось поле todos, записываю todos в хранилище');
+      // записую в сховище нове значення
       localStorage.setItem('todos', JSON.stringify(nextTodos));
     }
 
@@ -95,9 +108,10 @@ class App extends Component {
       0,
     );
   };
-
+  // метод відкривання модалкі
   toggleModal = () => {
     this.setState(({ showModal }) => ({
+      // якщо не фолс то тру
       showModal: !showModal,
     }));
   };
@@ -110,10 +124,16 @@ class App extends Component {
 
     return (
       <Container>
+        {/* <Tabs items={tabs} /> */}
+        {/* {showModal && <Clock />} */}
+        {/* <button type='button' onClick={this.toggleModal}>Відкрити модалку</button> */}
+        {/* <button type='button' onClick={this.toggleModal}>Відкрити/сховати таймер</button> */}
+        {/* <Clock/> */}
+         {/* onClick={this.toggleModal} рендер по умові  тобіш закрити і відкрити */}
         <IconButton onClick={this.toggleModal} aria-label="Добавить todo">
           <AddIcon width="40" height="40" fill="#fff" />
         </IconButton>
-
+         {/* рендеремо модалку по умові */}
         {showModal && (
           <Modal onClose={this.toggleModal}>
             <TodoEditor onSubmit={this.addTodo} />
