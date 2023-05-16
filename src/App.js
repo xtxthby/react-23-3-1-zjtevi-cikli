@@ -53,7 +53,8 @@ class App extends Component {
       // записую в сховище нове значення
       localStorage.setItem('todos', JSON.stringify(nextTodos));
     }
-
+    // якщо масив тудушок став довше то закрий модалку, тобіш при сабміті
+    // також довжина попередніх тудушек не повинна бути 0
     if (nextTodos.length > prevTodos.length && prevTodos.length !== 0) {
       this.toggleModal();
     }
@@ -69,7 +70,8 @@ class App extends Component {
     this.setState(({ todos }) => ({
       todos: [todo, ...todos],
     }));
-
+    //  при додаванні форми закривається модалка
+    // вище інша можливість
     // this.toggleModal();
   };
 
@@ -129,7 +131,9 @@ class App extends Component {
         {/* <button type='button' onClick={this.toggleModal}>Відкрити модалку</button> */}
         {/* <button type='button' onClick={this.toggleModal}>Відкрити/сховати таймер</button> */}
         {/* <Clock/> */}
-         {/* onClick={this.toggleModal} рендер по умові  тобіш закрити і відкрити */}
+        
+         {/* onClick={this.toggleModal} рендер по умові  тобіш закрити і відкрити .
+         і  aria-label="Добавить todo" це атрибут доступності */}
         <IconButton onClick={this.toggleModal} aria-label="Добавить todo">
           <AddIcon width="40" height="40" fill="#fff" />
         </IconButton>
